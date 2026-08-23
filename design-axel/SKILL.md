@@ -5,7 +5,7 @@ argument-hint: "[livrable] [contexte]  ·  --safe pour un rendu conventionnel"
 license: MIT
 metadata:
   author: claudekit (fork Axel)
-  version: "3.1.0"
+  version: "3.2.0"
 ---
 
 # design-axel
@@ -73,6 +73,9 @@ Détail dans `references/direction.md` §0.
 | Identité de marque, voix, assets | `brand/REFERENCE.md` | `references/qa.md` §A |
 | Tokens, variables CSS, thèmes | `design-system/REFERENCE.md` | `references/qa.md` §A+§D |
 | Revue / audit d'une UI existante | `ui-ux-pro-max/REFERENCE.md` Quick Reference | `references/qa.md` |
+| Choix de typographie | `ui-styling/references/fonts-catalog.md` (29 familles libres, appariements) | `references/qa.md` §A |
+
+Routage par *question* plutôt que par livrable : `references/design-routing.md`.
 
 Un seul chemin canonique par tâche : les modules (`slides/`, `banner-design/`, …) sont la
 référence, `references/` ne contient plus que ce qui n'a pas de module dédié.

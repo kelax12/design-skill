@@ -170,8 +170,8 @@ Embed conceptual DNA without announcing:
 - Large sizes for impact moments
 
 **Font integration:**
-- Search `./canvas-fonts` directory
-- Download needed fonts
+- Pick from `fonts-catalog.md` (29 curated OFL families, with their character and pairings)
+- Load from Google Fonts at compose time; verify with `document.fonts.check()` before export
 - Bring typography onto canvas
 - Part of art, not typeset digitally
 

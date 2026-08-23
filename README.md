@@ -62,8 +62,14 @@ appliquées à des bannières et à des pages web.
 
 ## Autres correctifs
 
-- `_claude-nested-copies.disabled/` supprimé (6,6 Mo de copies complètes des sous-skills),
-  ainsi que 6 fichiers de références dupliqués à l'octet près. 25 Mo → 8,3 Mo.
+- Poids : **25 Mo → 2,5 Mo**, 105 fichiers. Supprimés parce que rien ne les atteignait :
+  `_claude-nested-copies.disabled/` (6,6 Mo de copies completes des sous-skills), 6 fichiers
+  de references dupliques a l'octet pres, le scaffolding amont pour Warp/Windsurf/Cursor,
+  les tests unitaires amont et un artefact `.coverage`.
+- **54 fichiers TTF (5,6 Mo) remplaces par un catalogue.** Aucun script ne les chargeait :
+  leur seul usage etait d'etre parcourus pour choisir. `ui-styling/references/fonts-catalog.md`
+  liste desormais les 29 familles avec leur caractere, leurs usages et des appariements
+  de depart, en 3 Ko ; on charge depuis Google Fonts au moment de composer.
 - `references/design-routing.md` réécrit : il décrivait 8 sous-skills qui n'existent plus.
 - `SKILL.md` : 307 → 128 lignes, routeur au lieu de catalogue de commandes.
 - **Génération d'images par IA retirée.** Les modules logo / CIP / icônes appelaient l'API
@@ -108,7 +114,7 @@ design-axel/
 │   ├── design-routing.md       routage par question
 │   └── social-photos-design.md
 ├── ui-ux-pro-max/              moteur de recherche design (correcteur, pas directeur)
-├── ui-styling/                 shadcn/ui + Tailwind, + 53 fontes libres
+├── ui-styling/                 shadcn/ui + Tailwind, catalogue de 29 fontes libres
 ├── design-system/              tokens en 3 couches, specs de composants
 ├── brand/                      identité, voix, cohérence
 ├── banner-design/              bannières social / pub / web / print
@@ -122,8 +128,8 @@ Ce dépôt redistribue du travail de tiers, conservé avec ses licences :
 
 - skill `design` et sous-skills — [claudekit](https://github.com/carlrannaberg/claudekit), MIT
 - module `ui-ux-pro-max` — voir `design-axel/ui-ux-pro-max/LICENSE`
-- `ui-styling/canvas-fonts/` — 53 fontes sous SIL Open Font License, chaque `*-OFL.txt`
-  accompagnant sa fonte
+- les 29 familles citees dans `fonts-catalog.md` sont sous SIL Open Font License ; le depot
+  ne redistribue plus les binaires, il ne fait que les nommer
 
 Les ajouts propres à ce fork (`references/direction.md`, `references/qa.md`,
 `scripts/preflight.mjs`, `SKILL.md`) sont sous MIT.
