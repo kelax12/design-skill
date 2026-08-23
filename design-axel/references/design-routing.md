@@ -1,58 +1,60 @@
-# Routage — quel module pour quelle question
+# Routing — which module for which question
 
-Ce fichier décrivait autrefois 8 sous-skills séparés (`→ brand`, `→ logo-design`, …) avec des
-chemins `node .claude/skills/brand/scripts/…`. Ces skills n'existent plus : tout est devenu
-**module interne** de `design-axel`. La table de routage qui fait foi est celle du `SKILL.md`.
-Ce fichier ne garde que le routage par *question*, qui reste utile.
+This file used to describe 8 separate sub-skills (`→ brand`, `→ logo-design`, …) with paths
+like `node .claude/skills/brand/scripts/…`. Those skills no longer exist: everything became an
+**internal module** of `design-axel`. The authoritative routing table is the one in `SKILL.md`.
+This file keeps only the routing *by question*, which is still useful.
 
-**Rappel de doctrine :** quelle que soit l'entrée, `references/direction.md` passe en premier
-pour tout livrable visuel. Les modules ci-dessous exécutent une direction déjà arrêtée.
+**Doctrine reminder:** whatever the entry point, `references/direction.md` comes first for any
+visual deliverable. The modules below execute a direction that has already been decided.
 
-## Par question
+## By question
 
-| Question | Où aller |
+| Question | Where to go |
 |---|---|
-| « À quoi ça doit ressembler ? » | `references/direction.md` — **toujours ici en premier** |
-| « Quelle couleur pour ça ? » | `brand/REFERENCE.md` si une charte existe, sinon `direction.md` §2 |
-| « Comment créer un token pour X ? » | `design-system/REFERENCE.md` |
-| « Faut-il une variable CSS ici ? » | `design-system/references/token-architecture.md` |
-| « Comment construire ce composant ? » | `ui-styling/REFERENCE.md` |
-| « Comment ajouter le mode sombre ? » | `ui-styling/references/shadcn-theming.md` |
-| « Est-ce on-brand ? » | `brand/references/consistency-checklist.md` |
-| « Cette UI est-elle correcte ? » (audit) | `ui-ux-pro-max/REFERENCE.md` Quick Reference + `references/qa.md` |
-| « Pourquoi ça fait cheap / générique ? » | `references/direction.md` §3 (critique anti-défaut) |
-| « Quelle taille pour cette plateforme ? » | `banner-design/references/banner-sizes-and-styles.md` ou `references/social-photos-design.md` |
-| « Créer un logo » | `references/direction.md` puis SVG dessine a la main |
-| « Mockups de papeterie / identité corporate » | composition HTML/CSS + export Playwright |
-| « Générer des icônes SVG » | jeu existant (Lucide/Heroicons) ou SVG dessine |
-| « Créer un pitch deck » | `slides/REFERENCE.md` |
+| "What should this look like?" | `references/direction.md` — **always here first** |
+| "What color for this?" | `brand/REFERENCE.md` if a brand system exists, otherwise `direction.md` §2 |
+| "How do I create a token for X?" | `design-system/REFERENCE.md` |
+| "Should this be a CSS variable?" | `design-system/references/token-architecture.md` |
+| "How do I build this component?" | `ui-styling/REFERENCE.md` |
+| "How do I add dark mode?" | `ui-styling/references/shadcn-theming.md` |
+| "Which typeface should I use?" | `ui-styling/references/fonts-catalog.md` |
+| "Is this on brand?" | `brand/references/consistency-checklist.md` |
+| "Is this UI any good?" (audit) | `ui-ux-pro-max/REFERENCE.md` Quick Reference + `references/qa.md` |
+| "Why does this look cheap / generic?" | `references/direction.md` §3 (anti-default critique) |
+| "What size for this platform?" | `banner-design/references/banner-sizes-and-styles.md` or `references/social-photos-design.md` |
+| "Create a logo" | `references/direction.md`, then hand-drawn SVG |
+| "Stationery / corporate identity mockups" | HTML/CSS composition + Playwright export |
+| "Generate SVG icons" | existing set (Lucide/Heroicons) or drawn SVG |
+| "Build a pitch deck" | `slides/REFERENCE.md` |
 
-## Enchaînements courants
+## Common sequences
 
-**Nouveau projet complet**
-`direction.md` → `brand/` (formaliser) → `design-system/` (tokens) → `ui-styling/` (implémenter) → `qa.md`
+**New project, end to end**
+`direction.md` → `brand/` (formalize) → `design-system/` (tokens) → `ui-styling/` (implement) → `qa.md`
 
-**Projet existant à faire évoluer**
-Lire la charte et les tokens du code → `direction.md` §0 (hériter) → module du livrable → `qa.md`
+**Existing project to evolve**
+Read the brand doc and the tokens in the code → `direction.md` §0 (inherit) → module for the
+deliverable → `qa.md`
 
-**Campagne visuelle (plusieurs formats)**
-`direction.md` **une seule fois** → décliner sur chaque format via `banner-design/` ou
-`references/social-photos-design.md` → `qa.md` §A sur chaque export.
-Un seul concept pour toute la campagne : c'est ce qui la rend reconnaissable.
+**Visual campaign (several formats)**
+`direction.md` **once** → adapt to each format via `banner-design/` or
+`references/social-photos-design.md` → `qa.md` §A on each export.
+One concept for the whole campaign: that is what makes it recognizable.
 
-**Package de marque**
-`direction.md` **une seule fois** → logo SVG → declinaisons (papeterie, avatar, banniere)
-→ `slides/` pour la presentation. Un seul concept pour tout le package.
+**Brand package**
+`direction.md` **once** → SVG logo → applications (stationery, avatar, banner) →
+`slides/` for the deck. One concept for the whole package.
 
-## Commandes
+## Commands
 
 ```bash
 PY=$(command -v python3 || command -v python)
 SKILL=~/.claude/skills/design-axel
 
-node $SKILL/scripts/preflight.mjs                                   # état machine
-$PY  $SKILL/ui-ux-pro-max/scripts/search.py "<query>" --design-system   # baseline à battre
-node $SKILL/brand/scripts/inject-brand-context.cjs                  # charte → contexte
+node $SKILL/scripts/preflight.mjs                                       # machine state
+$PY  $SKILL/ui-ux-pro-max/scripts/search.py "<query>" --design-system   # baseline to beat
+node $SKILL/brand/scripts/inject-brand-context.cjs                      # brand doc → context
 node $SKILL/design-system/scripts/generate-tokens.cjs -c tokens.json
 node $SKILL/design-system/scripts/validate-tokens.cjs -d src/
 npx shadcn@latest add button card input

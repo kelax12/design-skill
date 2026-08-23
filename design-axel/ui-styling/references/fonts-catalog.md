@@ -1,13 +1,13 @@
-# Catalogue de fontes — 29 familles libres, choisies pour leur caractère
+# Font catalogue — 29 libre families, chosen for their character
 
-Sélection curée, toutes sous **SIL Open Font License** et toutes disponibles sur
-[Google Fonts](https://fonts.google.com). Ce fichier a remplacé un dossier de 54 fichiers
-TTF (5,6 Mo) qu'aucun script ne chargeait : leur seul usage réel était de **parcourir la
-liste pour choisir**. C'est ce que fait ce catalogue, à 3 Ko.
+A curated selection, all under the **SIL Open Font License** and all available on
+[Google Fonts](https://fonts.google.com). This file replaced a folder of 54 TTF files (5.6 MB)
+that no script ever loaded: their only real use was **browsing the list to choose**. That is
+what this catalogue does, in 3 KB.
 
-## Comment s'en servir
+## How to use it
 
-Charger au moment de composer, jamais en local :
+Load at compose time, never from disk:
 
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,84 +15,84 @@ Charger au moment de composer, jamais en local :
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Instrument+Sans:wght@400;500&display=block" rel="stylesheet">
 ```
 
-`display=block` plutôt que `swap` pour un visuel exporté en PNG : on veut la vraie fonte au
-rendu, pas un repli figé dans l'image. Et **vérifier** après chargement, sinon l'échec est
-silencieux :
+Use `display=block` rather than `swap` for a visual exported to PNG: you want the real face at
+render time, not a fallback frozen into the image. And **verify** after loading, otherwise
+failure is silent:
 
 ```js
 await page.evaluate(() => document.fonts.ready);
 const ok = await page.evaluate(() => document.fonts.check('700 74px "Bricolage Grotesque"'));
 ```
 
-> Déclarer `font-family` ne charge rien. Une famille non chargée retombe sur `system-ui`
-> sans le moindre avertissement — le défaut le plus courant, et le plus invisible.
+> Declaring `font-family` loads nothing. An unloaded family falls back to `system-ui` with no
+> warning whatsoever — the most common defect, and the most invisible.
 
-## Display — porter la personnalité
+## Display — carry the personality
 
-| Famille | Caractère | Va bien pour |
+| Family | Character | Good for |
 |---|---|---|
-| **Bricolage Grotesque** | Grotesque à largeurs irrégulières, optical sizing. Personnalité sans passer par un serif | Titres éditoriaux, produits qui veulent du caractère sans être sages |
-| **Young Serif** | Serif trapu, empattements francs, très présent | Titres alimentaires, artisanat, éditorial chaleureux |
-| **Gloock** | Didone à contraste extrême, verticalité marquée | Luxe, mode, culture. À réserver aux très grandes tailles |
-| **Italiana** | Romaine fine, élégante, presque gravée | Beauté, joaillerie, invitations |
-| **Poiret One** | Géométrique Art déco, traits filiformes | Affiches, façades, années 20 |
-| **Boldonse** | Display expérimental, formes compressées | Une seule ligne, en très grand. Illisible en petit |
-| **Erica One** | Grasse, arrondie, foraine | Promos, événements, ton exubérant |
-| **Big Shoulders** | Condensée américaine, très haute | Titres denses, signalétique, sport |
-| **Tektur** | Technique, coins coupés, aspect machine | Gaming, industrie, science-fiction sobre |
-| **Smooch Sans** | Condensée légère, allongée | Éditorial mode, superpositions |
-| **Arsenal SC** | Petites capitales, humaniste | Sous-titres, exergues, mentions de section |
+| **Bricolage Grotesque** | Grotesque with irregular widths, optical sizing. Personality without reaching for a serif | Editorial headlines, products that want character without being tame |
+| **Young Serif** | Stocky serif, blunt slabs, very present | Food, craft, warm editorial headlines |
+| **Gloock** | Didone with extreme contrast, strong verticals | Luxury, fashion, culture. Large sizes only |
+| **Italiana** | Fine roman, elegant, almost engraved | Beauty, jewellery, invitations |
+| **Poiret One** | Geometric Art Deco, hairline strokes | Posters, facades, 1920s |
+| **Boldonse** | Experimental display, compressed forms | One line, very large. Illegible small |
+| **Erica One** | Heavy, rounded, fairground | Promotions, events, exuberant tone |
+| **Big Shoulders** | American condensed, very tall | Dense headlines, wayfinding, sport |
+| **Tektur** | Technical, cut corners, machined look | Gaming, industry, restrained sci-fi |
+| **Smooch Sans** | Light condensed, elongated | Fashion editorial, overlays |
+| **Arsenal SC** | Small caps, humanist | Subheads, pull quotes, section markers |
 
-## Texte — se taire et se lire
+## Text — get out of the way
 
-| Famille | Caractère | Va bien pour |
+| Family | Character | Good for |
 |---|---|---|
-| **Instrument Sans** | Grotesque neutre, dessin propre, très bon en petit | Corps de texte, interfaces. Valeur sûre |
-| **Work Sans** | Humaniste souple, chaleur discrète | Corps long, sites institutionnels |
-| **Outfit** | Géométrique régulière, moderne | SaaS, produits tech grand public |
-| **Jura** | Sans à squelette technique, léger | Data, dashboards, ton scientifique |
-| **National Park** | Inspirée de la signalétique des parcs US | Outdoor, tourisme, cartographie |
-| **Lora** | Serif de lecture, italiques calligraphiques | Articles longs, blogs, contenu à lire |
-| **Crimson Pro** | Serif classique de labeur, italique fine | Livres, essais, docs académiques |
-| **Libre Baskerville** | Baskerville taillée pour l'écran, large | Corps de texte à l'ancienne, presse |
-| **IBM Plex Serif** | Serif corporate au dessin franc | Documentation technique lisible |
-| **Instrument Serif** | Serif display fine, très contrastée | Titres d'article, chapeaux |
+| **Instrument Sans** | Neutral grotesque, clean drawing, excellent small | Body copy, interfaces. The safe choice |
+| **Work Sans** | Supple humanist, quiet warmth | Long copy, institutional sites |
+| **Outfit** | Even geometric, modern | SaaS, consumer tech products |
+| **Jura** | Sans with a technical skeleton, light | Data, dashboards, scientific tone |
+| **National Park** | Drawn from US national park signage | Outdoor, travel, cartography |
+| **Lora** | Reading serif, calligraphic italics | Long articles, blogs, content meant to be read |
+| **Crimson Pro** | Classic text serif, fine italic | Books, essays, academic docs |
+| **Libre Baskerville** | Baskerville cut for screens, wide | Traditional body copy, press |
+| **IBM Plex Serif** | Corporate serif with a frank drawing | Readable technical documentation |
+| **Instrument Serif** | Fine display serif, high contrast | Article titles, standfirsts |
 
-## Mono — chiffres, code, tableaux de bord
+## Mono — figures, code, dashboards
 
-Toutes ont des **chiffres tabulaires** : indispensable dès qu'une valeur change et ne doit
-pas faire danser la mise en page.
+All have **tabular figures**: essential as soon as a value changes and must not make the
+layout dance.
 
-| Famille | Caractère | Va bien pour |
+| Family | Character | Good for |
 |---|---|---|
-| **Geist Mono** | Neutre, ouverte, très lisible en petit | Données, légendes, libellés d'interface |
-| **JetBrains Mono** | Dessinée pour le code, hauteur d'x généreuse | Blocs de code, terminaux |
-| **IBM Plex Mono** | Mono corporate, légère chaleur | Documentation, extraits techniques |
-| **DM Mono** | Mono géométrique, italique élégante | Étiquettes, éditorial technique |
-| **Red Hat Mono** | Mono contemporaine, formes larges | Interfaces développeur |
+| **Geist Mono** | Neutral, open, very legible small | Data, captions, interface labels |
+| **JetBrains Mono** | Drawn for code, generous x-height | Code blocks, terminals |
+| **IBM Plex Mono** | Corporate mono, slight warmth | Documentation, technical excerpts |
+| **DM Mono** | Geometric mono, elegant italic | Labels, technical editorial |
+| **Red Hat Mono** | Contemporary mono, wide forms | Developer interfaces |
 
-## Accents — un mot, pas un paragraphe
+## Accents — one word, not a paragraph
 
-| Famille | Caractère | Va bien pour |
+| Family | Character | Good for |
 |---|---|---|
-| **Silkscreen** | Bitmap 8 bits | Rétro, jeu, badge. Un mot maximum |
-| **Pixelify Sans** | Pixel plus lisible que Silkscreen | Gaming avec un peu de texte |
-| **Nothing You Could Do** | Manuscrite au stylo, penchée | Annotation, signature, note en marge |
+| **Silkscreen** | 8-bit bitmap | Retro, gaming, badges. One word maximum |
+| **Pixelify Sans** | More legible than Silkscreen | Gaming with actual text |
+| **Nothing You Could Do** | Ballpoint handwriting, slanted | Annotation, signature, margin note |
 
-## Appariements de départ
+## Starting pairings
 
-Trois familles à rôles distincts valent mieux qu'une seule déclinée en poids — voir
-`../../references/direction.md` §2. **Display et texte identiques est un échec**, c'est le
-réflexe par défaut du moteur de recommandation.
+Three families with distinct roles beat one family in several weights — see
+`../../references/direction.md` §2. **Identical display and body is a failure**: it is the
+recommendation engine's default reflex.
 
-| Intention | Display | Texte | Données |
+| Intent | Display | Text | Data |
 |---|---|---|---|
-| Produit à caractère | Bricolage Grotesque | Instrument Sans | Geist Mono |
-| Éditorial chaleureux | Young Serif | Lora | IBM Plex Mono |
-| Luxe / culture | Gloock | Crimson Pro | DM Mono |
-| Technique / data | Tektur | Jura | JetBrains Mono |
-| Institutionnel sobre | Instrument Serif | Work Sans | Geist Mono |
-| Rétro / jeu | Silkscreen *(un mot)* | Outfit | Pixelify Sans |
+| Product with character | Bricolage Grotesque | Instrument Sans | Geist Mono |
+| Warm editorial | Young Serif | Lora | IBM Plex Mono |
+| Luxury / culture | Gloock | Crimson Pro | DM Mono |
+| Technical / data | Tektur | Jura | JetBrains Mono |
+| Restrained institutional | Instrument Serif | Work Sans | Geist Mono |
+| Retro / gaming | Silkscreen *(one word)* | Outfit | Pixelify Sans |
 
-Ces appariements sont des **points de départ, pas des réponses**. Si le concept sort
-identique à la ligne du tableau, c'est qu'il n'y a pas encore de concept.
+These pairings are **starting points, not answers**. If the concept comes out identical to a
+row in this table, there is no concept yet.

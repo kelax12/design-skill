@@ -1,6 +1,6 @@
 # Social Photos Design Guide
 
-Design social media images via HTML/CSS rendering + screenshot export. Utilise les modules internes `ui-ux-pro-max/`, `brand/`, `design-system/` du skill design, et Playwright pour l'export.
+Design social media images via HTML/CSS rendering + screenshot export. Uses this skill's internal `ui-ux-pro-max/`, `brand/` and `design-system/` modules, and Playwright for the export.
 
 ## Platform Sizes
 
@@ -24,7 +24,7 @@ Design social media images via HTML/CSS rendering + screenshot export. Utilise l
 
 ### Step 1: Plan the Work
 
-Créer une todo list native (outil de tâches de l'agent) pour découper le travail :
+Create a native todo list (the agent's task tool) to break the work down:
 - Requirement analysis task
 - Idea generation task(s)
 - HTML design task(s) — can parallelize per size/variant
@@ -43,13 +43,13 @@ Parse user input for:
 - **Content elements** — headline, subtext, CTA, images, icons
 - **Quantity** — how many variations (default: 3)
 
-### Step 3: Direction artistique (gate obligatoire)
+### Step 3: Art direction (mandatory gate)
 
-**Charger `direction.md` et le suivre.** Avant tout HTML : hériter de la charte du projet
-(BRAND.md du dépôt courant si présent), puis produire le concept — 4-6 hex nommés,
-2-3 typos avec rôles distincts, un layout, **un** élément signature — et la critique
-anti-défaut écrite. Les modules `ui-ux-pro-max/`, `brand/`, `design-system/` interviennent
-ensuite, en contrôle — jamais comme source de l'idée.
+**Load `direction.md` and follow it.** Before any HTML: inherit the project's brand system
+(a BRAND.md or equivalent in the current repo, if present), then produce the concept — 4-6
+named hex values, 2-3 type families with distinct roles, a layout, **one** signature element
+— and the written anti-default critique. The `ui-ux-pro-max/`, `brand/` and `design-system/`
+modules come in afterwards, as controls — never as the source of the idea.
 
 ### Step 3b: Generate Ideas
 
@@ -63,11 +63,11 @@ Present ideas to user via `AskUserQuestion` for approval before designing.
 
 ### Step 4: Design HTML Files
 
-Charger ces modules dans l'ordre (chemins relatifs au dossier du skill design) :
+Load these modules in order (paths relative to this skill's directory):
 
 1. **`brand/REFERENCE.md`** — Extract brand colors, fonts, voice from user's project
 2. **`design-system/REFERENCE.md`** — Get design tokens (spacing, typography scale, color palette)
-3. **`ui-ux-pro-max/REFERENCE.md`** (ou le skill `frontend-design` si présent) — for layout, hierarchy, visual balance.
+3. **`ui-ux-pro-max/REFERENCE.md`** — for layout, hierarchy, visual balance.
 
 For each approved idea + each target size, create an HTML file:
 
@@ -155,7 +155,7 @@ Key flags:
 
 #### Option B: playwright-cli skill (si présent)
 
-Utiliser `playwright-cli` pour :
+Use Playwright to:
 1. Open each HTML file in browser (`playwright-cli open file:///...`, `resize W H`, `screenshot`)
 2. Set viewport to exact target dimensions
 3. Wait 3-5s for fonts/images to fully load
@@ -277,7 +277,7 @@ Report structure:
 
 ### Step 8: Organize Output
 
-Organiser les fichiers produits (pas de skill dédié — le faire directement) :
+Organize the produced files (no dedicated skill — just do it):
 - Move/copy exported PNGs to proper asset directories
 - Ensure reports are in `plans/reports/` with correct naming
 - Clean up intermediate HTML files if requested
@@ -334,4 +334,4 @@ This sub-skill handles social media image design only. Does NOT handle:
 - Animation/motion graphics
 - Print production files (CMYK, bleed)
 - Direct social media posting/scheduling
-- AI image generation (utiliser un outil d'images IA si disponible dans l'environnement)
+- AI image generation (use an image tool if one is available in the environment)

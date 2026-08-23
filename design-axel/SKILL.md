@@ -1,126 +1,125 @@
 ---
 name: design-axel
-description: "Design UI/UX et assets visuels, avec direction artistique assumée. Utiliser pour concevoir, refondre, critiquer ou finaliser une interface (landing, dashboard, SaaS, site, app mobile), pour produire des visuels (bannières, posts et carrousels réseaux sociaux, stories, slides, logos, identité de marque, icônes), ou pour choisir couleurs, typographies, espacement et layout. Couvre aussi les design tokens, shadcn/ui + Tailwind, l'accessibilité et le mode sombre."
-argument-hint: "[livrable] [contexte]  ·  --safe pour un rendu conventionnel"
+description: "Design UI/UX and visual assets with a committed art direction. Use to design, redesign, critique or finalize an interface (landing page, dashboard, SaaS, website, mobile app), to produce visuals (banners, social posts and carousels, stories, slides, logos, brand identity, icons), or to choose colors, typography, spacing and layout. Also covers design tokens, shadcn/ui + Tailwind, accessibility and dark mode."
+argument-hint: "[deliverable] [context]  ·  --safe for a deliberately conventional result"
 license: MIT
 metadata:
-  author: claudekit (fork Axel)
-  version: "3.2.0"
+  author: claudekit (fork)
+  version: "4.0.0"
 ---
 
 # design-axel
 
-Skill unifié de design. Fork corrigé de `claudekit/design` : moteur de recherche réparé,
-scope mobile déverrouillé, doublons supprimés, et surtout **une doctrine explicite** à la
-place de trois doctrines qui se contredisaient.
+Unified design skill. Corrected fork of `claudekit/design`: search engine repaired,
+mobile-only scope unlocked, duplicates removed, and above all **one explicit doctrine**
+in place of three that contradicted each other.
 
-## Doctrine — l'ordre n'est pas négociable
+## Doctrine — the order is not negotiable
 
 ```
-0. preflight      →  savoir ce qui marche sur cette machine
-1. charte projet  →  hériter avant d'inventer (BRAND.md, DESIGN.md, tokens du code)
-2. DIRECTION      →  concept + élément signature + critique anti-défaut   ← references/direction.md
-3. production     →  coder exactement le concept validé
-4. QA             →  ui-ux-pro-max en correcteur, checklist du livrable   ← references/qa.md
-5. vérification   →  screenshot, regarder, corriger. 1 passe groupée.
+0. preflight   →  find out what actually works on this machine
+1. project     →  inherit before inventing (BRAND.md, DESIGN.md, tokens in the code)
+2. DIRECTION   →  concept + signature element + anti-default critique   ← references/direction.md
+3. production  →  build exactly the concept you committed to
+4. QA          →  ui-ux-pro-max as corrector, checklist per deliverable ← references/qa.md
+5. verify      →  screenshot, look at it, fix. One batched pass.
 ```
 
-**Ce qui change par rapport à la version d'origine :** `ui-ux-pro-max` n'est plus la source
-des idées, il est le correcteur en fin de chaîne. Ses recommandations de style et de palette
-sont la moyenne statistique d'une catégorie de produit — c'est précisément ce qui produit
-des rendus corrects et oubliables. **L'étape 2 ne se saute jamais**, y compris pour une
-simple bannière.
+**What changed from the original:** `ui-ux-pro-max` is no longer the source of ideas, it is
+the corrector at the end of the chain. Its style and palette recommendations are the
+statistical average of a product category — which is exactly what produces work that is
+correct and forgettable. **Step 2 is never skipped**, not even for a single banner.
 
-## Étape 0 — Preflight (une fois par session)
+## Step 0 — Preflight (once per session)
 
 ```bash
 node ~/.claude/skills/design-axel/scripts/preflight.mjs
 ```
 
-Il affiche la valeur de `PY` et `SKILL` à utiliser ensuite, et dit quels modules sont
-réellement disponibles. Toutes les commandes de ce skill supposent :
+It prints the `PY` and `SKILL` values to use afterwards, and reports which modules are
+actually available. Every command in this skill assumes:
 
 ```bash
-PY=$(command -v python3 || command -v python)   # Windows : python, pas python3
+PY=$(command -v python3 || command -v python)   # Windows: python, not python3
 SKILL=~/.claude/skills/design-axel
 ```
 
-## Étape 1 — Hériter de la charte du projet
+## Step 1 — Inherit the project's visual truth
 
 ```bash
-ls BRAND.md DESIGN.md PRODUCT.md design-system/MASTER.md docs/DA-*.md 2>/dev/null
+ls BRAND.md BRANDING.md DESIGN.md STYLEGUIDE.md PRODUCT.md design-system/MASTER.md docs/design*.md 2>/dev/null
 ```
 
-Si un de ces fichiers existe, **il fait foi** : la direction se décline, elle ne se réinvente
-pas. Vérifier aussi les tokens réels du code (`tailwind.config`, `:root`, `theme.css`).
-Détail dans `references/direction.md` §0.
+If any of these exists, **it is the source of truth**: the direction gets adapted, not
+reinvented. Also check the tokens actually in the code (`tailwind.config`, `:root`,
+`theme.css`) — a project's visual truth lives in its code, not in a filename.
+Details in `references/direction.md` §0.
 
-## Étape 2 — Direction artistique (obligatoire)
+## Step 2 — Art direction (mandatory)
 
-**Charger `references/direction.md` et le suivre.** Sortie attendue avant toute ligne de code :
-4-6 hex nommés · 2-3 familles typographiques avec rôles distincts · un concept de layout ·
-**un** élément signature · la critique anti-défaut écrite.
+**Load `references/direction.md` and follow it.** Expected output before a single line of
+code: 4-6 named hex values · 2-3 type families with distinct roles · a layout concept ·
+**one** signature element · the anti-default critique, written down.
 
-## Routage par livrable
+## Routing by deliverable
 
-| Livrable | Modules à charger | QA |
+| Deliverable | Modules to load | QA |
 |---|---|---|
-| Landing, site, dashboard, SaaS | `references/direction.md` → `ui-styling/REFERENCE.md` | `references/qa.md` §A+§B |
-| App mobile / React Native | `references/direction.md` → `ui-ux-pro-max/REFERENCE.md` (Quick Reference) | `references/qa.md` §A+§C |
-| Bannière, cover, header, pub | `references/direction.md` → `banner-design/REFERENCE.md` | `references/qa.md` §A |
-| Post, carrousel, story réseaux sociaux | `references/direction.md` → `references/social-photos-design.md` | `references/qa.md` §A |
-| Présentation, pitch deck | `references/direction.md` → `slides/REFERENCE.md` | `references/qa.md` §A |
-| Identité de marque, voix, assets | `brand/REFERENCE.md` | `references/qa.md` §A |
-| Tokens, variables CSS, thèmes | `design-system/REFERENCE.md` | `references/qa.md` §A+§D |
-| Revue / audit d'une UI existante | `ui-ux-pro-max/REFERENCE.md` Quick Reference | `references/qa.md` |
-| Choix de typographie | `ui-styling/references/fonts-catalog.md` (29 familles libres, appariements) | `references/qa.md` §A |
+| Landing page, website, dashboard, SaaS | `references/direction.md` → `ui-styling/REFERENCE.md` | `references/qa.md` §A+§B |
+| Mobile / React Native app | `references/direction.md` → `ui-ux-pro-max/REFERENCE.md` (Quick Reference) | `references/qa.md` §A+§C |
+| Banner, cover, header, ad | `references/direction.md` → `banner-design/REFERENCE.md` | `references/qa.md` §A |
+| Social post, carousel, story | `references/direction.md` → `references/social-photos-design.md` | `references/qa.md` §A |
+| Presentation, pitch deck | `references/direction.md` → `slides/REFERENCE.md` | `references/qa.md` §A |
+| Brand identity, voice, assets | `brand/REFERENCE.md` | `references/qa.md` §A |
+| Tokens, CSS variables, themes | `design-system/REFERENCE.md` | `references/qa.md` §A+§D |
+| Review / audit of existing UI | `ui-ux-pro-max/REFERENCE.md` Quick Reference | `references/qa.md` |
+| Typography choice | `ui-styling/references/fonts-catalog.md` (29 libre families, pairings) | `references/qa.md` §A |
 
-Routage par *question* plutôt que par livrable : `references/design-routing.md`.
+Routing by *question* rather than by deliverable: `references/design-routing.md`.
 
-Un seul chemin canonique par tâche : les modules (`slides/`, `banner-design/`, …) sont la
-référence, `references/` ne contient plus que ce qui n'a pas de module dédié.
+One canonical path per task: the modules (`slides/`, `banner-design/`, …) are the reference;
+`references/` only holds what has no dedicated module.
 
-## Étape 4 — QA (correcteur, pas directeur)
+## Step 4 — QA (corrector, not director)
 
-**Charger `references/qa.md`** et n'appliquer que la checklist du livrable.
-Ne jamais imposer les règles d'app native (44 pt, safe areas, gestes, haptique) à un
-visuel statique ou à une page web — c'est faux et ça écrase la composition.
+**Load `references/qa.md`** and apply only the checklist for this deliverable.
+Never impose native-app rules (44 pt targets, safe areas, gestures, haptics) on a static
+visual or a web page — they do not apply and they flatten the composition.
 
 ```bash
-$PY $SKILL/ui-ux-pro-max/scripts/search.py "<produit industrie ton>" --design-system   # baseline à battre
-$PY $SKILL/ui-ux-pro-max/scripts/search.py "<sujet>" --domain ux                       # anti-patterns, a11y
-$PY $SKILL/ui-ux-pro-max/scripts/search.py "<sujet>" --stack <stack>                   # 16 stacks disponibles
+$PY $SKILL/ui-ux-pro-max/scripts/search.py "<product industry tone>" --design-system   # baseline to beat
+$PY $SKILL/ui-ux-pro-max/scripts/search.py "<topic>" --domain ux                       # anti-patterns, a11y
+$PY $SKILL/ui-ux-pro-max/scripts/search.py "<topic>" --stack <stack>                   # 16 stacks available
 ```
 
-Domaines : `product` `style` `color` `typography` `landing` `chart` `ux` `google-fonts`
-`react` `web` `prompt`. Stacks : `html-tailwind` `shadcn` `react` `nextjs` `vue` `nuxtjs`
+Domains: `product` `style` `color` `typography` `landing` `chart` `ux` `google-fonts`
+`react` `web` `prompt`. Stacks: `html-tailwind` `shadcn` `react` `nextjs` `vue` `nuxtjs`
 `nuxt-ui` `svelte` `angular` `astro` `react-native` `flutter` `swiftui` `jetpack-compose`
 `threejs` `laravel`.
 
-## Pas de generation d'images par IA
+## No AI image generation
 
-Ce skill ne genere **aucune image par IA**. Logo, identite corporate et icones se produisent
-en **HTML/CSS/SVG pur**, exportes via Playwright : c'est deterministe, reproductible,
-versionnable en clair, net a toute taille, et ca ne depend d'aucune cle ni d'aucun quota.
+This skill generates **no images with AI**. Logos, brand identity and icons are produced in
+**pure HTML/CSS/SVG**, exported through Playwright: deterministic, reproducible, diffable in
+plain text, crisp at any size, and dependent on no API key or quota.
 
-- **Logo / marque** : SVG dessine a la main. Si le projet a deja un logo (souvent
-  `assets/`, `public/`, ou nomme dans la charte), **le reutiliser** plutot que d'en inventer un.
-- **Icones** : prendre un jeu existant coherent (Lucide, Heroicons) ou dessiner en SVG.
-  Une seule famille, une seule graisse de trait (cf. `references/qa.md` §A).
-- **Mockups / mises en situation** : composition HTML/CSS (ombre, perspective, masque),
-  ou photo fournie par le client.
+- **Logo / brand**: hand-drawn SVG. If the project already has a logo (often in `assets/`,
+  `public/`, or named in the brand doc), **reuse it** instead of inventing one.
+- **Icons**: take a consistent existing set (Lucide, Heroicons) or draw SVG. One family, one
+  stroke weight (see `references/qa.md` §A).
+- **Mockups / product shots**: HTML/CSS composition (shadow, perspective, mask), or a photo
+  supplied by the client.
 
 ## Scripts
 
-| Script | Usage |
+| Script | Purpose |
 |---|---|
-| `scripts/preflight.mjs` | État de la machine — à lancer en premier |
-| `ui-ux-pro-max/scripts/search.py` | Moteur de recherche design (styles, palettes, typos, UX, stacks) |
-| `brand/scripts/` · `design-system/scripts/` | Injection de charte, génération et validation de tokens |
+| `scripts/preflight.mjs` | Machine state — run this first |
+| `ui-ux-pro-max/scripts/search.py` | Design search engine (styles, palettes, type, UX, stacks) |
+| `brand/scripts/` · `design-system/scripts/` | Brand context injection, token generation and validation |
 
-## Mode `--safe`
+## `--safe` mode
 
-Rendu conventionnel assumé (client conservateur, outil interne). Les étapes 2 et 3 restent
-obligatoires : la distinction passe alors par la précision — rythme d'espacement, échelle
-typographique, qualité des états — au lieu de l'expression. Un design sobre n'est pas un
-design par défaut.
+A deliberately conventional result (conservative client, internal tool). Steps 2 and 3 still
+apply: distinction then comes from **precision** — spacing rhythm, type scale, quality of
+states — instead of expression. A restrained design is not a default design.

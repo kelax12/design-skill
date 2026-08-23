@@ -35,12 +35,12 @@ Collect via AskUserQuestion:
 
 ### Step 2: Direction artistique (gate obligatoire)
 
-1. **Charger `../references/direction.md` et le suivre jusqu'au bout.** Une bannière n'échappe
-   pas à la passe concept : c'est le format où le réflexe « dégradé + gros titre + CTA à
-   droite » est le plus fort. Sortie attendue : 4-6 hex nommés, 2-3 typos avec rôles,
-   un élément signature, la critique anti-défaut écrite.
-2. `ui-ux-pro-max` ne sert **pas** à trouver l'idée ici. Il sert de baseline à battre
-   (`--design-system`) et de correcteur de contraste. Ne pas lui laisser choisir le style.
+1. **Load `../references/direction.md` and follow it through.** A banner does not escape the
+   concept pass: this is the format where the "gradient + big headline + CTA bottom-right"
+   reflex is strongest. Expected output: 4-6 named hex values, 2-3 type families with roles,
+   one signature element, the anti-default critique written down.
+2. `ui-ux-pro-max` is **not** where the idea comes from here. It is the baseline to beat
+   (`--design-system`) and a contrast corrector. Do not let it pick the style.
 3. Use Chrome browser to research Pinterest for design references:
    ```
    Navigate to pinterest.com → search "[purpose] banner design [style]"
@@ -61,13 +61,13 @@ For each art direction option:
 
 2. **Generate visual elements** — par défaut en **HTML/CSS/SVG pur** (gradients, formes géométriques, patterns SVG, glassmorphism, noise CSS) : aucune dépendance externe et rendu net à toute taille.
 
-   Si un outil de génération d'images IA est disponible dans l'environnement (skill ou MCP d'images), l'utiliser pour les visuels photographiques/illustratifs avec ces règles de prompt :
+   If an AI image tool is available in the environment (skill or image MCP), use it for photographic or illustrative elements with these prompt rules:
    - Be descriptive: style, lighting, mood, composition, color palette
    - Include art direction: "minimalist flat design", "cyberpunk neon", "editorial photography"
    - Specify no-text: "no text, no letters, no words" (text overlaid in HTML step)
    - Match aspect ratio to platform (e.g. Instagram story = `9:16`)
 
-   Sinon, rester en HTML/CSS/SVG — ne pas bloquer le workflow sur un outil absent.
+   Otherwise stay in HTML/CSS/SVG — never block the workflow on a tool that is not there.
 
 3. **Compose final banner** — overlay text, CTA, logo on generated visual in HTML/CSS
 
@@ -75,8 +75,8 @@ For each art direction option:
 
 After designing HTML banners, export each to PNG via **Playwright** (skill `playwright-cli` si présent, sinon un script Playwright/Puppeteer) :
 
-1. **Serve HTML files** via local server (python http.server or similar), ou ouvrir le fichier directement
-2. **Screenshot each banner** at exact platform dimensions : ouvrir la page, redimensionner le viewport aux dimensions exactes de la plateforme (ex. 1500×500), puis capturer en PNG vers `assets/banners/{campaign}/{variant}-{size}.png`
+1. **Serve HTML files** via a local server (python http.server or similar), or open the file directly
+2. **Screenshot each banner** at exact platform dimensions: open the page, resize the viewport to the platform's exact dimensions (e.g. 1500×500), then capture to PNG at `assets/banners/{campaign}/{variant}-{size}.png`
 3. **Compresser** si >5 Mo (sharp, squoosh ou équivalent)
 
 **Output path convention** :

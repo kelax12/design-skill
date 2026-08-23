@@ -1,80 +1,80 @@
 # design-axel
 
-Skill Claude Code de design UI/UX. Fork corrigé du skill `design` de
-[claudekit](https://github.com/carlrannaberg/claudekit), qui compilait plusieurs
-skills d'UI/UX en un seul.
+A Claude Code skill for UI/UX design. Corrected fork of the `design` skill from
+[claudekit](https://github.com/carlrannaberg/claudekit), which bundled several UI/UX skills
+into one.
 
-Le fork existe pour une raison précise : **la version d'origine produisait des rendus
-génériques**, et pas par hasard. Trois causes, toutes corrigées ici.
+The fork exists for a specific reason: **the original produced generic work**, and not by
+accident. Three causes, all fixed here.
 
-## Ce qui était cassé
+## What was broken
 
-### 1. Le moteur de recherche ne tournait pas
+### 1. The search engine never ran
 
-`ui-ux-pro-max/scripts` et `ui-ux-pro-max/data` étaient des **symlinks git non résolus** :
-sous Windows, deux fichiers texte de 31 et 34 octets. La base de 161 palettes, 57 appariements
-typographiques et 99 règles UX était donc inaccessible, et le modèle improvisait.
+`ui-ux-pro-max/scripts` and `ui-ux-pro-max/data` were **unresolved git symlinks**: on Windows,
+two text files of 31 and 34 bytes. The database of 161 palettes, 57 type pairings and 99 UX
+rules was therefore unreachable, and the model improvised.
 
-Toutes les commandes invoquaient par ailleurs `python3`, qui n'existe pas sous Windows.
+Every command also invoked `python3`, which does not exist on Windows.
 
-→ Symlinks remplacés par de vrais dossiers, convention `$PY` / `$SKILL`, et un preflight
-(`scripts/preflight.mjs`) qui vérifie la machine avant de commencer.
+Fixed: symlinks replaced with real directories, a `$PY` / `$SKILL` convention, and a preflight
+(`scripts/preflight.mjs`) that checks the machine before you start.
 
-### 2. Trois doctrines se contredisaient, sans arbitre
+### 2. Three doctrines contradicted each other, with no arbiter
 
-`ui-ux-pro-max` prescrit de *coller* à sa catégorie de produit : style recommandé par
-industrie, palette tirée d'une base, cohérence avant tout. À côté, les skills de design
-d'Anthropic (`frontend-design`) demandent l'inverse — éviter les défauts, assumer un point
-de vue. Rien ne tranchait, donc le modèle suivait la doctrine la plus cochable, et livrait
-**la moyenne statistique de la catégorie**.
+`ui-ux-pro-max` prescribes *sticking to* your product category: style recommended by industry,
+palette pulled from a database, consistency above all. Alongside it, Anthropic's design skills
+(`frontend-design`) ask for the opposite: avoid defaults, commit to a point of view. Nothing
+arbitrated, so the model followed the most tickable doctrine and shipped **the statistical
+average of the category**.
 
-Exemple réel, requête « productivity saas all-in-one » :
+A real example, query "productivity saas all-in-one":
 
 ```
 Colors:     #0D9488 (teal) + #EA580C (orange)
-Typography: Plus Jakarta Sans en display ET en body
+Typography: Plus Jakarta Sans for display AND body
 Style:      Motion-Driven
 ```
 
-→ Doctrine explicite et ordonnée, `ui-ux-pro-max` **rétrogradé en correcteur** :
+Fixed: an explicit, ordered doctrine, with `ui-ux-pro-max` **demoted to corrector**:
 
 ```
-0. preflight   → ce qui marche sur cette machine
-1. charte      → hériter avant d'inventer (BRAND.md, DESIGN.md, tokens du code)
-2. DIRECTION   → concept + élément signature + critique anti-défaut  ← references/direction.md
-3. production  → coder exactement le concept validé
-4. QA          → ui-ux-pro-max en correcteur                          ← references/qa.md
-5. vérif       → screenshot, regarder, corriger. 1 passe groupée.
+0. preflight   -> what works on this machine
+1. project     -> inherit before inventing (BRAND.md, DESIGN.md, tokens in the code)
+2. DIRECTION   -> concept + signature element + anti-default critique  (references/direction.md)
+3. production  -> build exactly the concept you committed to
+4. QA          -> ui-ux-pro-max as corrector                           (references/qa.md)
+5. verify      -> screenshot, look at it, fix. One batched pass.
 ```
 
-L'étape 2 n'existait pas. C'est elle qui manquait le plus : le pipeline allait de
-`brief → recherche en base → HTML → export`, c'est-à-dire toujours la première idée.
+Step 2 did not exist. It is what was missing most: the pipeline ran
+`brief -> database lookup -> HTML -> export`, which always means the first idea.
 
-### 3. Scope React Native codé en dur
+### 3. React Native scope hard-coded
 
-`ui-ux-pro-max` déclarait « Stack: React Native (this project's only tech stack) » et
-n'exposait qu'un seul stack, alors que **16** existent dans sa base. Deux notes de périmètre
-excluaient explicitement le web. Résultat : des contraintes 44×44 pt, safe areas et haptique
-appliquées à des bannières et à des pages web.
+`ui-ux-pro-max` declared "Stack: React Native (this project's only tech stack)" and exposed a
+single stack, while **16** exist in its database. Two scope notices explicitly excluded the
+web. The result: 44x44 pt targets, safe areas and haptics enforced on banners and web pages.
 
-→ 16 stacks exposés, règles natives conditionnées au type de livrable
-(`references/qa.md` applique une checklist par livrable).
+Fixed: 16 stacks exposed, native rules conditioned on the deliverable type
+(`references/qa.md` applies one checklist per deliverable).
 
-## Autres correctifs
+## Other changes
 
-- Poids : **25 Mo → 2,5 Mo**, 105 fichiers. Supprimés parce que rien ne les atteignait :
-  `_claude-nested-copies.disabled/` (6,6 Mo de copies complètes des sous-skills), 6 fichiers
-  de références dupliqués à l'octet près, le scaffolding amont pour Warp/Windsurf/Cursor,
-  les tests unitaires amont et un artefact `.coverage`.
-- **54 fichiers TTF (5,6 Mo) remplacés par un catalogue.** Aucun script ne les chargeait :
-  leur seul usage était d'être parcourus pour choisir. `ui-styling/references/fonts-catalog.md`
-  liste désormais les 29 familles avec leur caractère, leurs usages et des appariements
-  de départ, en 3 Ko ; on charge depuis Google Fonts au moment de composer.
-- `references/design-routing.md` réécrit : il décrivait 8 sous-skills qui n'existent plus.
-- `SKILL.md` : 307 → 128 lignes, routeur au lieu de catalogue de commandes.
-- **Génération d'images par IA retirée.** Les modules logo / CIP / icônes appelaient l'API
-  Gemini. Logo, icônes et mockups se produisent désormais en HTML/CSS/SVG pur exporté via
-  Playwright : déterministe, reproductible, versionnable, sans clé ni quota.
+- Size: **25 MB to 2.5 MB**, 106 files. Removed because nothing reached them:
+  `_claude-nested-copies.disabled/` (6.6 MB of complete copies of the sub-skills), 6 reference
+  files duplicated byte for byte, the upstream scaffolding for Warp/Windsurf/Cursor, upstream
+  unit tests and a `.coverage` artifact.
+- **54 TTF files (5.6 MB) replaced by a catalogue.** No script ever loaded them: their only
+  use was being browsed to choose from. `ui-styling/references/fonts-catalog.md` now lists the
+  29 families with their character, their uses and starting pairings, in 3 KB; fonts are
+  loaded from Google Fonts at compose time.
+- `references/design-routing.md` rewritten: it described 8 sub-skills that no longer exist.
+- `SKILL.md`: 307 to 128 lines, a router instead of a command catalogue.
+- **AI image generation removed.** The logo / CIP / icon modules called the Gemini API. Logos,
+  icons and mockups are now produced in pure HTML/CSS/SVG exported through Playwright:
+  deterministic, reproducible, diffable, with no key and no quota.
+- Fully English, and free of any reference to the project it was developed against.
 
 ## Installation
 
@@ -84,52 +84,56 @@ cp -r design-skill/design-axel ~/.claude/skills/
 node ~/.claude/skills/design-axel/scripts/preflight.mjs
 ```
 
-Le preflight doit afficher `Aucun bloquant`. Il donne aussi les valeurs de `PY` et `SKILL`
-que les commandes du skill supposent :
+The preflight must print `No blockers`. It also gives the `PY` and `SKILL` values the skill's
+commands assume:
 
 ```bash
-PY=$(command -v python3 || command -v python)   # Windows : python, pas python3
+PY=$(command -v python3 || command -v python)   # Windows: python, not python3
 SKILL=~/.claude/skills/design-axel
 ```
 
-Invocation : `/design-axel <livrable> <contexte>`, ou `--safe` pour un rendu conventionnel
-assumé (la direction reste obligatoire, l'audace baisse d'un cran).
+Invoke with `/design-axel <deliverable> <context>`, or `--safe` for a deliberately
+conventional result (the direction pass still applies, the boldness drops one notch).
 
-## Prérequis
+**Renaming it**: the directory name and the `name:` field in `SKILL.md` must match. Change
+both, or the skill will not load.
 
-| Requis | Pour |
+## Requirements
+
+| Needed | For |
 |---|---|
-| Python 3 | moteur `ui-ux-pro-max` (styles, palettes, typos, UX, stacks) |
-| Node ≥ 18 | preflight |
-| Playwright | export PNG des visuels — `npx playwright install chromium` |
+| Python 3 | the `ui-ux-pro-max` engine (styles, palettes, type, UX, stacks) |
+| Node 18+ | preflight |
+| Playwright | PNG export of visuals, `npx playwright install chromium` |
 
 ## Structure
 
 ```
 design-axel/
-├── SKILL.md                    routeur + doctrine
-├── references/
-│   ├── direction.md            LA passe de direction artistique (obligatoire)
-│   ├── qa.md                   checklists de contrôle, une par type de livrable
-│   ├── design-routing.md       routage par question
-│   └── social-photos-design.md
-├── ui-ux-pro-max/              moteur de recherche design (correcteur, pas directeur)
-├── ui-styling/                 shadcn/ui + Tailwind, catalogue de 29 fontes libres
-├── design-system/              tokens en 3 couches, specs de composants
-├── brand/                      identité, voix, cohérence
-├── banner-design/              bannières social / pub / web / print
-├── slides/                     présentations HTML + Chart.js
-└── scripts/preflight.mjs       état de la machine
+  SKILL.md                    router + doctrine
+  LICENSE
+  references/
+    direction.md              THE art direction pass (mandatory)
+    qa.md                     quality checklists, one per deliverable type
+    design-routing.md         routing by question
+    social-photos-design.md
+  ui-ux-pro-max/              design search engine (corrector, not director)
+  ui-styling/                 shadcn/ui + Tailwind, catalogue of 29 libre typefaces
+  design-system/              three-layer tokens, component specs
+  brand/                      identity, voice, consistency
+  banner-design/              social / ad / web / print banners
+  slides/                     HTML presentations + Chart.js
+  scripts/preflight.mjs       machine state
 ```
 
-## Licences et attribution
+## Licensing and attribution
 
-Ce dépôt redistribue du travail de tiers, conservé avec ses licences :
+This repository redistributes third-party work, kept with its licenses:
 
-- skill `design` et sous-skills — [claudekit](https://github.com/carlrannaberg/claudekit), MIT
-- module `ui-ux-pro-max` — voir `design-axel/ui-ux-pro-max/LICENSE`
-- les 29 familles citées dans `fonts-catalog.md` sont sous SIL Open Font License ; le dépôt
-  ne redistribue plus les binaires, il ne fait que les nommer
+- the `design` skill and its sub-skills, from [claudekit](https://github.com/carlrannaberg/claudekit), MIT
+- the `ui-ux-pro-max` module, see `design-axel/ui-ux-pro-max/LICENSE`
+- the 29 families named in `fonts-catalog.md` are under the SIL Open Font License; this
+  repository no longer redistributes the binaries, it only names them
 
-Les ajouts propres à ce fork (`references/direction.md`, `references/qa.md`,
-`scripts/preflight.mjs`, `SKILL.md`) sont sous MIT.
+Fork-specific additions (`references/direction.md`, `references/qa.md`,
+`scripts/preflight.mjs`, `SKILL.md`) are MIT. See `design-axel/LICENSE`.
